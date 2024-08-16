@@ -1,10 +1,7 @@
 package soft.afric.ger_na.data.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import soft.afric.ger_na.data.enums.EtatReport;
 
 import java.util.Date;
@@ -14,13 +11,15 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-
+@Builder
 @Table(name="reports")
 public class Report extends AbstractEntity{
     private Date date;
     private Double montant;
     @Enumerated(value = EnumType.STRING)
     private EtatReport etat;
+    @ManyToOne
+    private User user;
     @ManyToOne
     private Zone zone;
     @ManyToOne

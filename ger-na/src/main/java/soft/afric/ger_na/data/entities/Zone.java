@@ -1,10 +1,7 @@
 package soft.afric.ger_na.data.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-
+@Builder
 @Table(name="zones")
 public class Zone extends AbstractEntity{
-    @Column(unique = true, nullable = false, length = 50)
+    @Column(unique = true, nullable = false, length = 100)
     private String libelle;
     @ManyToOne
     private Region region;

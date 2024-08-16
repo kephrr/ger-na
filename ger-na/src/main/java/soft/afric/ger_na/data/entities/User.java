@@ -1,6 +1,5 @@
 package soft.afric.ger_na.data.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -14,10 +13,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@Table(name="regions")
-public class Region extends AbstractEntity{
-    @Column(unique = true, nullable = false, length = 50)
-    private String libelle;
-    @OneToMany(mappedBy = "region")
-    private List<Zone> zones;
+@Table(name="users")
+public class User extends AbstractEntity{
+    private String nom;
+    private String telephone;
+
+    @OneToMany(mappedBy = "user")
+    private List<Report> report;
 }
