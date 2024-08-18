@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
+import soft.afric.ger_na.data.enums.RoleUser;
 
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class User extends AbstractEntity{
     private String nom;
     private String telephone;
-
+    private String password;
+    private RoleUser role;
     @OneToMany(mappedBy = "user")
     private List<Report> report;
 }

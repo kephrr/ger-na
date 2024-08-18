@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ReportService {
     List<Report> findAll();
+    List<Report> findAllByUser(Long id);
     int create(ReportCreateDto dto);
 }
