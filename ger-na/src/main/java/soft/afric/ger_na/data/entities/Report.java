@@ -16,6 +16,8 @@ import java.util.Date;
 public class Report extends AbstractEntity{
     private Date date;
     private Double montant;
+    private String details;
+    private String lieu;
     @Enumerated(value = EnumType.STRING)
     private EtatReport etat;
     @ManyToOne
