@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RegionService {
     List<Region> findAll();
+    Region findById(Long id);
 }
