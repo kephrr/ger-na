@@ -1,0 +1,13 @@
+endpoints:
+
+#Lister les signalements
+GET /reports
+
+#Lister les signalements d'un utilisateur
+GET /{id}/reports
+
+#Lister les signalements les zones
+GET /zones
+
+#Lister les zones les plus signalées
+GET /zones/most
