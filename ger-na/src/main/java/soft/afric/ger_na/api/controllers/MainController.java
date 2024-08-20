@@ -1,10 +1,7 @@
 package soft.afric.ger_na.api.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.web.bind.annotation.*;
 import soft.afric.ger_na.api.dto.request.ReportCreateDto;
 
 import java.util.Map;
@@ -22,7 +19,11 @@ public interface MainController {
 
 
     @GetMapping("/reports")
-    Map<Object, Object> reports();
+    Map<Object, Object> reports(
+            @RequestParam Long idService,
+            @RequestParam Long idRegion,
+            @RequestParam Long idZone
+    );
 
     @GetMapping("{id}/reports")
     Map<Object, Object> myReports(

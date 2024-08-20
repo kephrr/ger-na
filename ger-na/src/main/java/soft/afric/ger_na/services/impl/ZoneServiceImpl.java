@@ -22,4 +22,9 @@ public class ZoneServiceImpl implements ZoneService {
     public List<Zone> findAll(Region region) {
         return repository.findAllByRegion(region);
     }
+
+    @Override
+    public Zone findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 }

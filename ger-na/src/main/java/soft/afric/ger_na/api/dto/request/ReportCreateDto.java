@@ -14,13 +14,18 @@ import java.util.Date;
 @Builder
 public class ReportCreateDto {
     private  Long id;
-    private String libelle;
+    private String details;
     private Date date;
     private String region;
     private String zone;
     private Double montant;
+    private String service;
 
-    public static Report toEntity(){
-        return Report.builder().build();
+    public static Report toEntity(ReportCreateDto dto){
+        return Report.builder()
+                .details(dto.getDetails())
+                .date(dto.getDate())
+                .montant(dto.getMontant())
+                .build();
     }
 }

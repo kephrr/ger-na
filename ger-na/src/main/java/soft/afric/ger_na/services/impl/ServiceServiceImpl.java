@@ -7,6 +7,7 @@ import soft.afric.ger_na.services.ServiceService;
 
 import java.util.List;
 
+
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
 public class ServiceServiceImpl implements ServiceService {
@@ -14,5 +15,10 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Service> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Service findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 }

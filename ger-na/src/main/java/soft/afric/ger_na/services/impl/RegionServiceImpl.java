@@ -16,4 +16,9 @@ public class RegionServiceImpl implements RegionService {
     public List<Region> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Region findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 }
