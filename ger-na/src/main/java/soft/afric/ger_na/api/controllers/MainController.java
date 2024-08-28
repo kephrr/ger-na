@@ -8,32 +8,44 @@ import java.util.Map;
 
 
 public interface MainController {
+
+
+    @GetMapping("/signalements")
+    Map<Object, Object> reports(
+            @RequestParam(defaultValue = 0 ) Long service,
+            @RequestParam(defaultValue = 0 ) Long region,
+            @RequestParam(defaultValue = 0 ) Long zone
+    );
+
+    @GetMapping("signalements/{id}")
+    Map<Object, Object> myReports(
+            @PathVariable Long id
+    );
+
+    @PostMapping("/signalements")
+    Map<Object, Object> save(
+            @RequestBody ReportCreateDto reportDto
+    );
+
+
+    @GetMapping("/services")
+    Map<Object, Object> services();
+
     @GetMapping("/regions")
     Map<Object, Object> regions();
 
     @GetMapping("/zones")
     Map<Object, Object> zones();
 
-    @GetMapping("/services")
-    Map<Object, Object> services();
-
-
-    @GetMapping("/reports")
-    Map<Object, Object> reports(
-            @RequestParam Long idService,
-            @RequestParam Long idRegion,
-            @RequestParam Long idZone
+    @GetMapping("/zone/region/{region}")
+    Map<Object, Object> zonesByRegions(
+            @PathVariable Long region
     );
 
-    @GetMapping("{id}/reports")
-    Map<Object, Object> myReports(
-            @PathVariable Long id
-    );
-
-    @PostMapping("/save")
-    Map<Object, Object> save(
-            @RequestBody ReportCreateDto reportDto
-    );
+    @GetMapping("/login")
+    Map<Object, Object> login();
+    @PostMapping("/register")
+    Map<Object, Object> register();
     /*
     @RequestBody RendezVousCreateDto rendezVous
     @GetMapping("/regions/{id}")
