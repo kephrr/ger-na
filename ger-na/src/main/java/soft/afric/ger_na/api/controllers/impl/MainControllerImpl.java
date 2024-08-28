@@ -50,6 +50,43 @@ public class MainControllerImpl implements MainController {
     }
 
     @Override
+    public Map<Object, Object> zonesByRegions(Long id) {
+        List<ZoneDto> results = zonesService.findAll().stream()
+                .filter(z -> Objects.equals(z.getRegion().getId(), id))
+                .map(ZoneDto::toDto)
+                .collect(Collectors.toList());
+        return RestResponseDto.response(
+                results,
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public Map<Object, Object> verifications(Long tel) {
+        return Map.of();
+    }
+
+    @Override
+    public Map<Object, Object> login() {
+        return Map.of();
+    }
+
+    @Override
+    public Map<Object, Object> register() {
+        return Map.of();
+    }
+
+    @Override
+    public Map<Object, Object> change(Long id, String password) {
+        return Map.of();
+    }
+
+    @Override
+    public Map<Object, Object> reset(Long id, String password) {
+        return Map.of();
+    }
+
+    @Override
     public Map<Object, Object> services() {
         List<ServiceDto> results = service.findAll().stream()
                 .map(ServiceDto::toDto)
