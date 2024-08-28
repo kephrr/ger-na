@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ZoneService{
     List<Zone> findAll();
-    //List<Zone> findAll(Region region);
+    List<Zone> findAll(Region region);
     Zone findById(Long id);
 }
