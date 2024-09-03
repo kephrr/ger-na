@@ -1,6 +1,8 @@
 package soft.afric.ger_na.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import soft.afric.ger_na.data.entities.Region;
 import soft.afric.ger_na.data.repositories.IRegionRepository;
@@ -15,6 +17,11 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public List<Region> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Page<Region> findAll(Pageable page) {
+        return repository.findAll(page);
     }
 
     @Override
