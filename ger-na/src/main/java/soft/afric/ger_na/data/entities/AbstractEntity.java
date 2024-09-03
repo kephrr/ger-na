@@ -19,7 +19,7 @@ public abstract class  AbstractEntity {
     protected Long id;
 
     @Column(columnDefinition = "boolean default true")
-    protected  Boolean acticve=true;
+    protected  Boolean isActive =true;
 
     @Override
     public boolean equals(Object o) {

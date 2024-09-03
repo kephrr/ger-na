@@ -7,10 +7,10 @@ import java.util.Map;
 
 public interface ReportController {
 // ABDOULAYE
-    @GetMapping("/signalements")
+    @GetMapping("/signalements/paginate")
     Map<Object, Object> reports(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "0") int size,
+            @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "0" ) Long service,
             @RequestParam(defaultValue = "0" ) Long region,
             @RequestParam(defaultValue = "0" ) Long zone

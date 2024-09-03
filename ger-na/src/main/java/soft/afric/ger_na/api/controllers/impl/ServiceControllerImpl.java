@@ -1,10 +1,13 @@
 package soft.afric.ger_na.api.controllers.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import soft.afric.ger_na.api.controllers.ServiceController;
 import soft.afric.ger_na.api.dto.response.ServiceDto;
+import soft.afric.ger_na.api.dto.response.ZoneDto;
 import soft.afric.ger_na.api.dto.response.rest.RestResponseDto;
 import soft.afric.ger_na.services.ServiceService;
 
@@ -21,12 +24,21 @@ public class ServiceControllerImpl implements ServiceController {
                 .map(ServiceDto::toDto).toList();
         return RestResponseDto.response(
                 results,
+                results.size(),
                 HttpStatus.OK
         );
     }
 
     @Override
     public Map<Object, Object> services(int page, int size) {
-        return Map.of();
+        Page<ServiceDto> results = service.findAll(PageRequest.of(page, size)).map(ServiceDto::toDto);
+        return RestResponseDto.response(
+                results.getContent(),
+                new int[results.getTotalPages()],
+                page,
+                results.getTotalElements(),
+                results.getTotalPages(),
+                HttpStatus.OK
+        );
     }
 }

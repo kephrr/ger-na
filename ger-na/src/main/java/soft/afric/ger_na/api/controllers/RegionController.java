@@ -9,9 +9,9 @@ public interface RegionController {
     @GetMapping("/regions")
     Map<Object, Object> regions();
 
-    @GetMapping("/regions")
-    Map<Object, Object> regions(
+    @GetMapping("/regions/paginate")
+    Map<Object, Object> regionsByPaginate(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "0") int size
+            @RequestParam(defaultValue = "5") int size
     );
 }

@@ -9,10 +9,10 @@ public interface ServiceController {
     @GetMapping("/services")
     Map<Object, Object> services();
 
-    @GetMapping("/services")
+    @GetMapping("/services/paginate")
     Map<Object, Object> services(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "0") int size
+            @RequestParam(defaultValue = "5") int size
     );
 
 }

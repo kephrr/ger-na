@@ -10,10 +10,10 @@ public interface ZoneController {
     @GetMapping("/zones")
     Map<Object, Object> zones();
 
-    @GetMapping("/zones")
+    @GetMapping("/zones/paginate")
     Map<Object, Object> zones(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "0") int size
+            @RequestParam(defaultValue = "5") int size
     );
 
     @GetMapping("/zones/region/{id}")

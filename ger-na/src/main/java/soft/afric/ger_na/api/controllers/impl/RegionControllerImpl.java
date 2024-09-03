@@ -1,6 +1,8 @@
 package soft.afric.ger_na.api.controllers.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import soft.afric.ger_na.api.controllers.RegionController;
@@ -21,12 +23,21 @@ public class RegionControllerImpl implements RegionController {
                 .map(RegionDto::toDto).toList();
         return RestResponseDto.response(
                 results,
+                results.size(),
                 HttpStatus.OK
         );
     }
 
     @Override
-    public Map<Object, Object> regions(int page, int size) {
-        return Map.of();
+    public Map<Object, Object> regionsByPaginate(int page, int size) {
+        Page<RegionDto> results = service.findAll(PageRequest.of(page, size)).map(RegionDto::toDto);
+        return RestResponseDto.response(
+                results.getContent(),
+                new int[results.getTotalPages()],
+                page,
+                results.getTotalElements(),
+                results.getTotalPages(),
+                HttpStatus.OK
+        );
     }
 }

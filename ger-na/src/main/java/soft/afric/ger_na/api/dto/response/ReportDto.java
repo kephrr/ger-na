@@ -34,7 +34,7 @@ public class ReportDto {
                 .details(r.getDetails())
                 .montant(r.getMontant())
                 .etat(r.getEtat().toString())
-                .user(r.getUser().getNom())
+               /* .user(r.getUser().getNom())*/
                 .zone(r.getZone().getLibelle())
                 .service(r.getService().getLibelle())
                 .build();

@@ -1,6 +1,8 @@
 package soft.afric.ger_na.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import soft.afric.ger_na.data.entities.Service;
 import soft.afric.ger_na.data.repositories.IServiceRepository;
 import soft.afric.ger_na.services.ServiceService;
@@ -15,6 +17,11 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Service> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Page<Service> findAll(Pageable page) {
+        return repository.findAll(page);
     }
 
     @Override
