@@ -8,6 +8,7 @@ import soft.afric.ger_na.data.repositories.IServiceRepository;
 import soft.afric.ger_na.services.ServiceService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @org.springframework.stereotype.Service
@@ -17,6 +18,16 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Service> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Optional<Service> show(Long dataID) {
+        return repository.findById(dataID);
+    }
+
+    @Override
+    public Service save(Service data) {
+        return null;
     }
 
     @Override

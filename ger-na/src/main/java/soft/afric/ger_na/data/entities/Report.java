@@ -20,10 +20,13 @@ public class Report extends AbstractEntity{
     private String lieu;
     @Enumerated(value = EnumType.STRING)
     private EtatReport etat;
+
     @ManyToOne
     private User user;
     @ManyToOne
     private Zone zone;
     @ManyToOne
     private Service service;
+    @ManyToOne
+    private Region region;
 }

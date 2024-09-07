@@ -9,6 +9,7 @@ import soft.afric.ger_na.data.repositories.IRegionRepository;
 import soft.afric.ger_na.services.RegionService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +28,15 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public Region findById(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Region save(Region data) {
+        return null;
+    }
+
+    @Override
+    public Optional<Region> show(Long dataID) {
+        return repository.findById(dataID);
     }
 }
