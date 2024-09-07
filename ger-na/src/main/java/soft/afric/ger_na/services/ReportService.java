@@ -11,11 +11,12 @@ import soft.afric.ger_na.data.entities.Zone;
 
 import java.util.List;
 
-public interface ReportService {
-    List<Report> findAll();
-    Page<Report> findAll(Pageable page);
-    Page<Report> findAllByFiltersAndPaginate(Service service, Region region, Zone zone, Pageable page);
-    List<Report> findAllByFilters(Service service, Region region, Zone zone);
+public interface ReportService extends IService<Report,Long>{
+
+    Page<Report> findAllByServiceAndRegionAndZoneAndPage(Pageable page, Service service, Region region, Zone zone);
+
+    Page<Report> findWithAllFiltersPage(Pageable page, String service, String region, String zone);
+
     Report findById(Long id);
     int create(ReportCreateDto dto);
 }
