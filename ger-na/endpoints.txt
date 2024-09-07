@@ -1,0 +1,14 @@
+GET /zones => List[ZoneDtoo] OK
+GET /zones/paginate => Page[ZoneDto] OK
+GET /zones/region/id => List[ZoneDto] OK
+
+GET /services => List[ServiceDto] OK
+GET /services => Page[ServiceDto] OK
+
+GET /regions => List[RegionDto] OK
+GET /regions => Page[RegionDto] OK
+
+GET /signalements => List[ZoneDtoo] OK
+GET /signalements/paginate => Page[ZoneDto] OK
+GET /signalements/id => List[ZoneDto] OK
+POST /signalements = save
