@@ -7,25 +7,28 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import soft.afric.ger_na.data.entities.Report;
 import soft.afric.ger_na.data.enums.EtatReport;
+import soft.afric.ger_na.data.repositories.IRegionRepository;
 import soft.afric.ger_na.data.repositories.IReportRepository;
 import soft.afric.ger_na.data.repositories.IServiceRepository;
 import soft.afric.ger_na.data.repositories.IZoneRepository;
 
 import java.util.Date;
-import java.util.List;
+
 
 @Order(4)
 //@Component
 @RequiredArgsConstructor
 public class ReportFixtures implements CommandLineRunner {
-    private final IReportRepository repository;
+    private final IReportRepository reportRepository;
     private final IZoneRepository zoneRepository;
     private final IServiceRepository serviceRepository;
+    private final IRegionRepository regionRepository;
     
 
     public void run(String... args) throws Exception {
         Long[] services = {2L,5L,5L, 4L,4L,3L, 2L,5L,4L,};
-        Long[] zones = {1L, 2L, 2L, 1L,14L,2L, 2L,5L,4L,};
+        Long[] zones = {1L, 2L, 2L, 1L,14L,2L, 29L,5L,4L,};
+        Long[] regions = {1L, 2L, 2L, 1L,14L,2L, 2L,5L,4L,};
         String[] lieu = {
                 "A côté du casino","A la reception","Au service de résidence",
                 "Dans le bureau du DG","Dans le bureau du DG","Au service 2",
@@ -41,7 +44,7 @@ public class ReportFixtures implements CommandLineRunner {
                 "J'étais en règle mais on m'a quand-même demandé de l'argent", "Il m'ont fait attendre 3h, et demandé de payer pour aller plus vite", "On m'a demandé de payer pour avoir mon certificat de résidence plus rapidement",
                 "J'étais en règle mais on m'a quand-même demandé de l'argent", "Il m'ont fait attendre 3h, et demandé de payer pour aller plus vite", "On m'a demandé de payer pour avoir mon certificat de résidence plus rapidement"};
         for(int i = 0; i<details.length; i++){
-            repository.save(
+            reportRepository.save(
                     Report.builder()
                             .details(details[i])
                             .date(new Date())
@@ -50,6 +53,7 @@ public class ReportFixtures implements CommandLineRunner {
                             .lieu(lieu[i])
                             .etat(EtatReport.Active)
                             .montant(montant[i])
+                            .region(regionRepository.findById(regions[i]).orElse(null))
                             .build());
         }
     }

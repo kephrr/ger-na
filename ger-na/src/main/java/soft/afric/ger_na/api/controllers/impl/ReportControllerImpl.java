@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import soft.afric.ger_na.api.controllers.ReportController;
 import soft.afric.ger_na.api.dto.request.ReportCreateDto;
 import soft.afric.ger_na.api.dto.response.ReportDto;
+import soft.afric.ger_na.api.dto.response.ReportDto2;
 import soft.afric.ger_na.api.dto.response.rest.RestResponseDto;
 import soft.afric.ger_na.data.entities.Region;
 import soft.afric.ger_na.data.entities.Report;
@@ -20,45 +21,56 @@ import soft.afric.ger_na.services.ReportService;
 import soft.afric.ger_na.services.ServiceService;
 import soft.afric.ger_na.services.ZoneService;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.stream;
 
 
 @RestController
 @RequiredArgsConstructor
 public class ReportControllerImpl implements ReportController {
-    private final ReportService service;
+    private final ReportService reportService;
     private final ServiceService serviceService;
     private final RegionService regionService;
     private final ZoneService zoneService;
 
     @Override
-    public Map<Object, Object> reportsPaginate(int page, int size, Long idService, Long idZone, Long idRegion) {
-        /*Service serviceFilter = serviceService.show(idService).orElse(null);
-        Region regionFilter = regionService.show(idRegion).orElse(null);
-        Zone zoneFilter = zoneService.show(idZone).orElse(null);*/
-        Service serviceFilter=null;
-        Region regionFilter=null;
-        Zone zoneFilter=null;
-        if (idService != null) {
-            serviceFilter = serviceService.show(idService).orElse(null);
-        }
-        if (idRegion != null) {
-            regionFilter = regionService.show(idRegion).orElse(null);
-        }
-        if (idZone != null) {
-            zoneFilter = zoneService.show(idZone).orElse(null);
-        }
+    public Map<Object, Object> reportsPaginate(
+        int page,
+        int size,
+        Long service,
+        Long zone,
+        Long region
+    ) {
+            Service service1 = serviceService.show(service).orElse(null);
+            Zone zone1 = zoneService.show(zone).orElse(null);
+            Region region1 = regionService.show(region).orElse(null);
+            Page<Report> datas = reportService.findAllByServiceAndRegionAndZone(PageRequest.of(page, size),service1,region1,zone1);
+            Page<ReportDto> results = datas.map(ReportDto::toDto);
+            return RestResponseDto.response(
+                    results.getContent(),
+                    new int[results.getTotalPages()],
+                    page,
+                    results.getTotalElements(),
+                    results.getTotalPages(),
+                    HttpStatus.OK
+            );
+    }
 
-        Page<ReportDto> results = service.findAllByServiceAndRegionAndZoneAndPage(
-                PageRequest.of(page,size),
-                serviceFilter, regionFilter, zoneFilter
-        ).map(ReportDto::toDto);
-
+    @Override
+    public Map<Object, Object> reports(
+            int page,
+            int size,
+            Long service,
+            Long zone,
+            Long region
+    ) {
+        Service service1 = serviceService.show(service).orElse(null);
+        Zone zone1 = zoneService.show(zone).orElse(null);
+        Region region1 = regionService.show(region).orElse(null);
+        Page<Report> datas = reportService.findAllByServiceAndRegionAndZone(PageRequest.of(page, size),service1,region1,zone1);
+        Page<ReportDto2> results = datas.map(ReportDto2::toDto);
         return RestResponseDto.response(
                 results.getContent(),
                 new int[results.getTotalPages()],
@@ -70,20 +82,9 @@ public class ReportControllerImpl implements ReportController {
     }
 
     @Override
-    public Map<Object, Object> reports() {
-        List<ReportDto> results = service.findAll().stream().map(ReportDto::toDto).toList();
-        return RestResponseDto.response(
-                results,
-                results.size(),
-                HttpStatus.OK
-        );
-    }
-
-    @Override
     public Map<Object, Object> myReports(Long id) {
-            Report report = service.findById(id);
-            ReportDto results=null;
-            if(report!=null) results = ReportDto.toDto(report);
+            Report report = reportService.show(id).orElseThrow(()->new RuntimeException("Report "+id.toString()+" not found"));
+            ReportDto2 results = ReportDto2.toDto(report);
             return RestResponseDto.response(
                     results,
                     HttpStatus.OK
@@ -98,28 +99,26 @@ public class ReportControllerImpl implements ReportController {
             Map<String, String> errors =new HashMap<>();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             fieldErrors.forEach(fieldError -> errors.put(fieldError.getField(),fieldError.getDefaultMessage()));
-            response= RestResponseDto.response(errors, HttpStatus.NOT_FOUND);
+            response= RestResponseDto.response(errors, HttpStatus.NOT_ACCEPTABLE);
         }else{
             try {
                 // Creer le signalement
                 Report report = ReportCreateDto.toEntity(reportDto);
-                Zone zone = zoneService.findById(reportDto.getZone());
+                Zone zone = zoneService.show(reportDto.getZone()).orElseThrow(()->new RuntimeException("Zone "+reportDto.getZone()+" not found"));
                 report.setRegion(zone.getRegion());
                 report.setZone(zone);
-                report.setService(serviceService.findById(reportDto.getService()));
-
-                service.save(report);
+                report.setService(serviceService.show(reportDto.getService()).orElseThrow(()->new RuntimeException("Service "+reportDto.getService()+" not found")));
+                reportService.save(report);
                 response= RestResponseDto.response(reportDto,HttpStatus.CREATED);
             }catch (Exception e) {
                 // Conflit de DTO
-                response= RestResponseDto.response(reportDto,HttpStatus.CONFLICT);
+                response= RestResponseDto.response(reportDto,HttpStatus.NOT_ACCEPTABLE);
                 System.out.println(e.getMessage());
             }
         }
-            //Report report = ReportCreateDto.toEntity(reportDto);
-            return RestResponseDto.response(
-                    response,
-                    HttpStatus.OK
-            );
+        return RestResponseDto.response(
+                response,
+                HttpStatus.OK
+        );
     }
 }

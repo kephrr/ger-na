@@ -17,12 +17,11 @@ public class Report extends AbstractEntity{
     private Date date;
     private Double montant;
     private String details;
+    @Column(nullable = true, unique = true, length = 50)
+    private String telephone;
     private String lieu;
     @Enumerated(value = EnumType.STRING)
     private EtatReport etat;
-
-    @ManyToOne
-    private User user;
     @ManyToOne
     private Zone zone;
     @ManyToOne

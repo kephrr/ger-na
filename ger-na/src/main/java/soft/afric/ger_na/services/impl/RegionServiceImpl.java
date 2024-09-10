@@ -17,26 +17,21 @@ public class RegionServiceImpl implements RegionService {
     private final IRegionRepository repository;
     @Override
     public List<Region> findAll() {
-        return repository.findAll();
+        return repository.findAllByIsActiveTrue();
     }
 
     @Override
     public Page<Region> findAll(Pageable page) {
-        return repository.findAll(page);
-    }
-
-    @Override
-    public Region findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findAllByIsActiveTrue(page);
     }
 
     @Override
     public Region save(Region data) {
-        return null;
+        return repository.save(data);
     }
 
     @Override
     public Optional<Region> show(Long dataID) {
-        return repository.findById(dataID);
+        return repository.findByIdAndIsActiveTrue(dataID);
     }
 }

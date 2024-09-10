@@ -11,9 +11,10 @@ import soft.afric.ger_na.data.entities.Zone;
 @Builder
 public class ZoneDto {
     private String libelle;
-
+    private Long id;
     public static ZoneDto toDto(Zone zone){
         return ZoneDto.builder()
+                .id(zone.getId())
                 .libelle(zone.getLibelle())
                 .build();
     }
