@@ -22,27 +22,23 @@ public class ZoneServiceImpl implements ZoneService {
     }
 
     @Override
-    public List<Zone> findAll(Region region) {
+    public List<Zone> findAllByRegion(Region region) {
         return repository.findAllByRegion(region);
     }
 
-    @Override
-    public Zone findById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
 
     @Override
     public Zone save(Zone data) {
-        return null;
+        return repository.save(data);
     }
 
     @Override
     public Page<Zone> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByIsActiveTrue(pageable);
     }
 
     @Override
     public Optional<Zone> show(Long dataID) {
-        return repository.findById(dataID);
+        return repository.findByIdAndIsActiveTrue(dataID);
     }
 }

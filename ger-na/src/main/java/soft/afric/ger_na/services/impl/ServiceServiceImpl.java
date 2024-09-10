@@ -17,26 +17,22 @@ public class ServiceServiceImpl implements ServiceService {
     private final IServiceRepository repository;
     @Override
     public List<Service> findAll() {
-        return repository.findAll();
+        return repository.findAllByIsActiveTrue();
     }
 
     @Override
     public Optional<Service> show(Long dataID) {
-        return repository.findById(dataID);
+        return repository.findByIdAndIsActiveTrue(dataID);
     }
 
     @Override
     public Service save(Service data) {
-        return null;
+        return repository.save(data);
     }
 
     @Override
     public Page<Service> findAll(Pageable page) {
-        return repository.findAll(page);
+        return repository.findAllByIsActiveTrue(page);
     }
 
-    @Override
-    public Service findById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
 }

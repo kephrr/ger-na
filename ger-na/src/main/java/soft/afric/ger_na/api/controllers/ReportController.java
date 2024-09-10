@@ -19,7 +19,13 @@ public interface ReportController {
     );
 
     @GetMapping("/signalements")
-    Map<Object, Object> reports();
+    Map<Object, Object> reports(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) Long service,
+            @RequestParam(required = false) Long zone,
+            @RequestParam(required = false) Long region
+    );
 
     @GetMapping("/signalements/{id}")
     Map<Object, Object> myReports(
