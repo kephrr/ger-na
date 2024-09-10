@@ -26,9 +26,12 @@ public class ReportFixtures implements CommandLineRunner {
     
 
     public void run(String... args) throws Exception {
-        Long[] services = {2L,5L,5L, 4L,4L,3L, 2L,5L,4L,};
-        Long[] zones = {1L, 2L, 2L, 1L,14L,2L, 29L,5L,4L,};
-        Long[] regions = {1L, 2L, 2L, 1L,14L,2L, 2L,5L,4L,};
+        Long[] services = {2L,5L,5L, 4L,4L,3L, 2L,5L,4L};
+        Long[] zones = {1L, 2L, 2L, 1L,14L,2L, 29L,5L,4L};
+        Long[] regions = {1L, 2L, 2L, 1L,14L,2L, 2L,5L,4L};
+        String[] telephones = {"784555525", "784555500", "784775525",
+                                "784555525","784555525","784555525",
+                                "784555525","784555525","784555525"};
         String[] lieu = {
                 "A côté du casino","A la reception","Au service de résidence",
                 "Dans le bureau du DG","Dans le bureau du DG","Au service 2",
@@ -54,6 +57,7 @@ public class ReportFixtures implements CommandLineRunner {
                             .etat(EtatReport.Active)
                             .montant(montant[i])
                             .region(regionRepository.findById(regions[i]).orElse(null))
+                            .telephone(telephones[i])
                             .build());
         }
     }
